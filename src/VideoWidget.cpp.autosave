@@ -22,18 +22,17 @@ VideoWidget::VideoWidget(QWidget* parent) :
                 // Invert Blue and Red color channels
                 cvtColor(image,image,CV_BGR2RGB);
 
-               fist.detectHand(image);
-               fist.identifyHand();
-               fist.drawLeftHand(image);
-               fist.drawRightHand(image);
-               fist.detectRotateByHand();
-               fist.detectStrafeByHand();
-
-
                 // Convert to Qt image
                 QImage img= QImage((const unsigned char*)(image.data),image.cols,image.rows,QImage::Format_RGB888);
 
-                fist.detectFastFallByHand(img.height()/2);
+                //detection des controles par la main
+                fist.detectHand(image);
+                fist.identifyHand();
+                fist.drawLeftHand(image);
+                fist.drawRightHand(image);
+                fist.detectRotateByHand();
+                fist.detectStrafeByHand();
+                fist.detectFastFallByHand(img.height()/1.17);
 
                 scene.clear();
                 scene.addPixmap(QPixmap::fromImage(img)); 

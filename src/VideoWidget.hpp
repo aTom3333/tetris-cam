@@ -6,8 +6,10 @@
 
 #include <memory>
 
+#include "opencv2/opencv.hpp"
 #include <opencv2/core.hpp>
-#include <opencv2/videoio.hpp>
+#include "opencv2/video.hpp"
+#include "hand.h";
 
 
 class VideoWidget : public QGraphicsView
@@ -19,6 +21,7 @@ private:
     std::unique_ptr<cv::VideoCapture> capture;
     QTimer timer;
     QGraphicsScene scene;
+    Hand fist;
 };
 
 
