@@ -3,6 +3,8 @@
 
 #include <QOpenGLWidget>
 #include <QTimer>
+#include "Tetromino.hpp"
+#include "Tetris/Grid.hpp"
 
 
 class TetrisWidget : public QOpenGLWidget
@@ -16,10 +18,13 @@ protected:
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int x, int y) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 private:
     double angle;
     QTimer timer;
+    Tetris::Grid grid;
+    Tetris::Tetromino* t = new Tetris::T_Tetromino;
 };
 
 
