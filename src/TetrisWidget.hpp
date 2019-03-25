@@ -4,7 +4,7 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 #include "Tetromino.hpp"
-#include "Tetris/Grid.hpp"
+#include "Grid.hpp"
 
 
 class TetrisWidget : public QOpenGLWidget
@@ -18,13 +18,22 @@ protected:
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int x, int y) override;
+
     void keyPressEvent(QKeyEvent* event) override;
+    //void drawCubes(); dessinne les cubes sans les faces mitoyennes
+    //bool contain(int x, int y); verifie si la grille contient un cube a cet emplacement
+
+//slots :
+//    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
     double angle;
     QTimer timer;
     Tetris::Grid grid;
     Tetris::Tetromino* t = new Tetris::T_Tetromino;
+    //grille de visu (origin des cubes), update via slots lors d'un signal du crtl, utile pour dessiner que face visible
+    //tetriminos courrant demander a chaque paint
+    //radius : rayon du cube 0.5
 };
 
 

@@ -1,6 +1,6 @@
 #include <algorithm>
 #include "Tetromino.hpp"
-#include "Tetris/Grid.hpp"
+#include "Grid.hpp"
 
 
 namespace Tetris
