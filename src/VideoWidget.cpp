@@ -30,7 +30,7 @@ VideoWidget::VideoWidget(QWidget* parent) :
     
     if(capture->isOpened())
     {
-        timer.setInterval(1000 / capture->get(CAP_PROP_FPS));
+        timer.setInterval(1000 / 60);
         timer.start();
     }
 }
