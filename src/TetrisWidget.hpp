@@ -24,7 +24,8 @@ private:
     double angle;
     QTimer timer;
     Tetris::Grid grid;
-    Tetris::Tetromino* t = new Tetris::T_Tetromino;
+    Tetris::Tetromino* t = nullptr;
+    int temp = 0;
 };
 
 

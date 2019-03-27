@@ -25,6 +25,8 @@ TetrisWidget::TetrisWidget(QWidget* parent) :
     
     grid(2, 5) = 1;
     grid(3, 14) = 1;
+    
+    t = new Tetris::T_Tetromino(grid);
 }
 
 void TetrisWidget::paintGL()
@@ -140,22 +142,46 @@ void TetrisWidget::keyPressEvent(QKeyEvent* event)
             break;
 
         case Qt::Key_Up:
-            t->translate(grid, 0, 1);
+            t->trans(grid, 0, 1);
             update();
             break;
 
         case Qt::Key_Down:
-            t->translate(grid, 0, -1);
+            t->translateDown(grid);
             update();
             break;
 
         case Qt::Key_Left:
-            t->translate(grid, -1, 0);
+            t->translateLeft(grid);
             update();
             break;
 
         case Qt::Key_Right:
-            t->translate(grid, 1, 0);
+            t->translateRight(grid);
+            update();
+            break;
+
+        case Qt::Key_D:
+            delete t;
+            switch(temp)
+            {
+                case 0:
+                    t = new Tetris::T_Tetromino(grid);
+                    break;
+                case 1:
+                    t = new Tetris::L_Tetromino(grid);
+                    break;
+                case 2:
+                    t = new Tetris::J_Tetromino(grid);
+                    break;
+                case 3:
+                    t = new Tetris::S_Tetromino(grid);
+                    break;
+                case 4:
+                    t = new Tetris::Z_Tetromino(grid);
+                    break;
+            }
+            temp = (temp+1) % 5;
             update();
             break;
     }

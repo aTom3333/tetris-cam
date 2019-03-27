@@ -33,6 +33,8 @@ namespace Tetris
     class Tetromino
     {
     public:
+        explicit Tetromino(Grid const& grid);
+        
         enum Kind { I, O, J, L, S, Z, T };
 
         virtual ~Tetromino() = default;
@@ -43,8 +45,13 @@ namespace Tetris
         Coord getOrigin() const { return origin; }
         std::array<Coord, 4> const& getBlocks() const { return blocks; }
         
-        bool translate(Grid const& grid, int x, int y);
-
+        // TODO Remove
+        void trans(Grid const& grid, int x, int y);
+        
+        bool translateLeft(Grid const& grid) noexcept;
+        bool translateRight(Grid const& grid) noexcept;
+        bool translateDown(Grid const& grid) noexcept;
+        
 
     protected:
         // Vive le C++ \o/ Cette écriture dégueu déclare wall_kick_offset comme 
@@ -58,20 +65,82 @@ namespace Tetris
         bool rotate(Grid const& grid, Rotation rot) noexcept;
         std::array<Coord, 4> base_rotate(Rotation rot) const noexcept;
 
+        bool translate(Grid const& grid, Coord v) noexcept;
+
     protected:
         Coord origin = {5, 5};
         std::array<Coord, 4> blocks;
         uint8_t rotationState = 0;
     };
-    
-    
+
+
     class T_Tetromino : public Tetromino
     {
     public:
-        T_Tetromino();
-        
+        explicit T_Tetromino(Grid const& grid);
+
     protected:
-        Coord (*wall_kick_offsets() const noexcept)[4][4] override;
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
+    };
+
+
+    class J_Tetromino : public Tetromino
+    {
+    public:
+        explicit J_Tetromino(Grid const& grid);
+
+    protected:
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
+    };
+
+
+    class L_Tetromino : public Tetromino
+    {
+    public:
+        explicit L_Tetromino(Grid const& grid);
+
+    protected:
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
+    };
+
+
+    class S_Tetromino : public Tetromino
+    {
+    public:
+        explicit S_Tetromino(Grid const& grid);
+
+    protected:
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
+    };
+
+
+    class Z_Tetromino : public Tetromino
+    {
+    public:
+        explicit Z_Tetromino(Grid const& grid);
+
+    protected:
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
+    };
+
+
+    class I_Tetromino : public Tetromino
+    {
+    public:
+        explicit I_Tetromino(Grid const& grid);
+
+    protected:
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
+    };
+
+
+    class O_Tetromino : public Tetromino
+    {
+    public:
+        explicit O_Tetromino(Grid const& grid);
+
+    protected:
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
     };
 
 }

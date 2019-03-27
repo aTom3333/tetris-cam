@@ -5,7 +5,11 @@
 
 namespace Tetris
 {
-
+    
+    Tetromino::Tetromino(Grid const& grid) :
+        origin{}, blocks{}
+    {}
+    
     std::array<Coord, 4> Tetromino::base_rotate(Rotation rot) const noexcept
     {
         int factor = static_cast<int>(rot) * 2 - 1;
@@ -71,20 +75,40 @@ namespace Tetris
         return rotate(grid, Rotation::CounterClockWise);
     }
 
-    bool Tetromino::translate(Grid const& grid, int x, int y)
+    bool Tetromino::translate(Grid const& grid, Coord v) noexcept
     {
-        if(fit(grid, origin+Coord{x, y}, blocks))
+        if(fit(grid, origin+v, blocks))
         {
-            origin = origin + Coord{x, y};
+            origin = origin + v;
             return true;
         }
         
         return false;
     }
 
+    bool Tetromino::translateLeft(Grid const& grid) noexcept
+    {
+        return translate(grid, {-1, 0});
+    }
 
-    static Coord JLSTZ_wk_off[2][4][4] = 
-        {   
+    bool Tetromino::translateRight(Grid const& grid) noexcept
+    {
+        return translate(grid, {1, 0});
+    }
+
+    bool Tetromino::translateDown(Grid const& grid) noexcept
+    {
+        return translate(grid, {0, -1});
+    }
+
+    void Tetromino::trans(Grid const& grid, int x, int y)
+    {
+        translate(grid, Coord{x, y});
+    }
+
+
+    static Coord JLSTZ_wk_off[2][4][4] =
+        {
             // Clockwise
             {
                 { {-1, 0}, {-1, 1}, {0, -2}, {-1, -2} }, // 0 >> 1
@@ -100,17 +124,93 @@ namespace Tetris
                 { {-1, 0}, {-1, -1}, {0, 2}, {-1, 2} } // 3 >> 2
             }
         };
+    
+    static Coord I_wk_off[2][4][4] =
+        {
+            // Clockwise
+            {
+                { {-2, 0}, {1, 0}, {-2, -1}, {1, 2} }, // 0 >> 1
+                { {-1, 0}, {2, 0}, {-1, 2}, {2, -1} }, // 1 >> 2
+                { {2, 0}, {-1, 0}, {2, 1}, {-1, -2} }, // 2 >> 3
+                { {1, 0}, {-2, 0}, {1, -2}, {-2, 1} } // 3 >> 0
+            },
+            // Counter-clockwise
+            {
+                { {-1, 0}, {2, 0}, {-1, 2}, {2, -1} }, // 0 >> 3
+                { {2, 0}, {-1, 0}, {2, 1}, {-1, -2} }, // 1 >> 0
+                { {1, 0}, {-2, 0}, {1, -2}, {-1, 1} }, // 2 >> 1
+                { {-2, 0}, {1, 0}, {-2, -1}, {1, 2} } // 3 >> 2
+            }
+        };
 
 
-    Coord (*T_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
-        return JLSTZ_wk_off;
-    }
-
-    T_Tetromino::T_Tetromino() : Tetromino()
+    T_Tetromino::T_Tetromino(Grid const& grid) : Tetromino(grid)
     {
         blocks[0] = {0, 0};
         blocks[1] = {1, 0};
         blocks[2] = {-1, 0};
         blocks[3] = {0, 1};
+        
+        origin = {grid.width()/2 - 1, grid.height()-2};
+    }
+
+    Coord (*T_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return JLSTZ_wk_off;
+    }
+
+    J_Tetromino::J_Tetromino(Grid const& grid) : Tetromino(grid)
+    {
+        blocks[0] = {0, 0};
+        blocks[1] = {1, 0};
+        blocks[2] = {-1, 0};
+        blocks[3] = {-1, 1};
+
+        origin = {grid.width()/2 - 1, grid.height()-2};
+    }
+
+    Coord (*J_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return JLSTZ_wk_off;
+    }
+
+    L_Tetromino::L_Tetromino(Grid const& grid) : Tetromino(grid)
+    {
+        blocks[0] = {0, 0};
+        blocks[1] = {1, 0};
+        blocks[2] = {-1, 0};
+        blocks[3] = {1, 1};
+
+        origin = {grid.width()/2 - 1, grid.height()-2};
+    }
+
+    Coord (*L_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return JLSTZ_wk_off;
+    }
+
+    S_Tetromino::S_Tetromino(Grid const& grid) : Tetromino(grid)
+    {
+        blocks[0] = {0, 0};
+        blocks[1] = {-1, 0};
+        blocks[2] = {1, 1};
+        blocks[3] = {0, 1};
+
+        origin = {grid.width()/2 - 1, grid.height()-2};
+    }
+
+    Coord (*S_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return JLSTZ_wk_off;
+    }
+
+    Z_Tetromino::Z_Tetromino(Grid const& grid) : Tetromino(grid)
+    {
+        blocks[0] = {0, 0};
+        blocks[1] = {1, 0};
+        blocks[2] = {-1, 1};
+        blocks[3] = {0, 1};
+
+        origin = {grid.width()/2 - 1, grid.height()-2};
+    }
+
+    Coord (*Z_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return JLSTZ_wk_off;
     }
 }
