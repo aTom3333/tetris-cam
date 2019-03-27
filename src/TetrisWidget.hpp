@@ -3,7 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QTimer>
-#include "Tetromino.hpp"
+#include "Tetris/Tetromino.hpp"
 #include "Tetris/Grid.hpp"
 
 

@@ -3,6 +3,7 @@
 
 
 #include <array>
+#include <memory>
 #include "fixed_point.hpp"
 
 
@@ -10,17 +11,15 @@ namespace Tetris
 {
     class Grid;
     
-    namespace 
+    
+    struct Coord
     {
-        struct Coord
-        {
-            fixed_point<int8_t, 1> x, y;
-        };
-        
-        Coord operator+(Coord a, Coord b) noexcept
-        {
-            return Coord{a.x+b.x, a.y+b.y};
-        }
+        fixed_point<int8_t, 1> x, y;
+    };
+    
+    Coord operator+(Coord a, Coord b) noexcept
+    {
+        return Coord{a.x+b.x, a.y+b.y};
     }
     
     
@@ -142,6 +141,8 @@ namespace Tetris
     protected:
         Coord (*wall_kick_offsets() const noexcept)[4][4];
     };
+    
+    std::unique_ptr<Tetromino>
 
 }
 

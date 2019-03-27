@@ -18,7 +18,7 @@ namespace Tetris
         std::transform(std::begin(blocks), std::end(blocks), std::begin(ret),
                        [factor](Coord a)
                        {
-                           return Coord{static_cast<int8_t>(-factor * a.y), static_cast<int8_t>(factor * a.x)};
+                           return Coord{-factor * a.y, factor * a.x};
                        });
         
         return ret;
@@ -212,5 +212,33 @@ namespace Tetris
 
     Coord (*Z_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
         return JLSTZ_wk_off;
+    }
+
+    O_Tetromino::O_Tetromino(Grid const& grid) : Tetromino(grid)
+    {
+        blocks[0] = {-0.5, 0.5};
+        blocks[1] = {-0.5, -0.5};
+        blocks[2] = {0.5, -0.5};
+        blocks[3] = {0.5, 0.5};
+
+        origin = {grid.width()/2 - 0.5, grid.height() - 1.5};
+    }
+
+    Coord (*O_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return nullptr;
+    }
+
+    I_Tetromino::I_Tetromino(Grid const& grid) : Tetromino(grid)
+    {
+        blocks[0] = {-1.5, 0.5};
+        blocks[1] = {-0.5, 0.5};
+        blocks[2] = {0.5, 0.5};
+        blocks[3] = {1.5, 0.5};
+
+        origin = {grid.width()/2 - 0.5, grid.height() - 2.5};
+    }
+
+    Coord (*I_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
+        return I_wk_off;
     }
 }

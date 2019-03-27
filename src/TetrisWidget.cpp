@@ -180,8 +180,14 @@ void TetrisWidget::keyPressEvent(QKeyEvent* event)
                 case 4:
                     t = new Tetris::Z_Tetromino(grid);
                     break;
+                case 5:
+                    t = new Tetris::O_Tetromino(grid);
+                    break;
+                case 6:
+                    t = new Tetris::I_Tetromino(grid);
+                    break;
             }
-            temp = (temp+1) % 5;
+            temp = (temp+1) % 7;
             update();
             break;
     }

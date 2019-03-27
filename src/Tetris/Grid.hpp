@@ -30,6 +30,7 @@ namespace Tetris
         uint32_t h;
         std::unique_ptr<uint32_t[]> data_ptr;
     };
+    
 
 }
 
