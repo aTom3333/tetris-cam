@@ -20,20 +20,23 @@ protected:
     void resizeGL(int x, int y) override;
 
     void keyPressEvent(QKeyEvent* event) override;
-    //void drawCubes(); dessinne les cubes sans les faces mitoyennes
-    //bool contain(int x, int y); verifie si la grille contient un cube a cet emplacement
+    void drawCubes() const; //dessinne les cubes sans les faces mitoyennes
+    void setColor(const unsigned int& id) const;
+    void drawTetromino()const;
 
 //slots :
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
     double angle;
-    QTimer timer;
     Tetris::Grid grid;
     Tetris::Tetromino* t = new Tetris::T_Tetromino;
     //grille de visu (origin des cubes), update via slots lors d'un signal du crtl, utile pour dessiner que face visible
     //tetriminos courrant demander a chaque paint
-    //radius : rayon du cube 0.5
+    float radius =0.5;
+    float dist =  20;
+    float teta = 150;
+    float phi = 100;
 };
 
 

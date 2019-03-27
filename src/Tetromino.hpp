@@ -10,20 +10,14 @@ namespace Tetris
 {
     class Grid;
     
-    namespace 
+
+    struct Coord
     {
-        struct Coord
-        {
-            fixed_point<int8_t, 1> x, y;
-        };
-        
-        Coord operator+(Coord a, Coord b) noexcept
-        {
-            return Coord{a.x+b.x, a.y+b.y};
-        }
-    }
-    
-    
+        fixed_point<int8_t, 1> x, y;
+    };
+
+    Coord operator+(Coord a, Coord b) noexcept;
+
     enum class Rotation : uint8_t
     {
         ClockWise = 0, CounterClockWise = 1
@@ -71,7 +65,7 @@ namespace Tetris
         T_Tetromino();
         
     protected:
-        Coord (*wall_kick_offsets() const noexcept)[4][4] override;
+        Coord (*wall_kick_offsets() const noexcept)[4][4];
     };
 
 }

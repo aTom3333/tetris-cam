@@ -6,6 +6,11 @@
 namespace Tetris
 {
 
+    Coord operator+(Coord a, Coord b) noexcept
+    {
+        return Coord{a.x+b.x, a.y+b.y};
+    }
+
     std::array<Coord, 4> Tetromino::base_rotate(Rotation rot) const noexcept
     {
         int factor = static_cast<int>(rot) * 2 - 1;
