@@ -54,6 +54,7 @@ void TetrisWidget::paintGL()
     glLightfv(GL_LIGHT0,GL_POSITION,colorPos_tab);
 
     glDisable(GL_LIGHTING);
+    
     //dessin de la grille
     glBegin(GL_LINES);
         glColor3ub(196,196,196);
@@ -67,10 +68,12 @@ void TetrisWidget::paintGL()
             glVertex3f(i,-10,0);
         }
     glEnd();
+
     glEnable(GL_LIGHTING);
 
     //dessin des cube de la grille
     drawCubes();
+
 }
 
 void TetrisWidget::initializeGL()

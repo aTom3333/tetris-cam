@@ -18,6 +18,11 @@ protected:
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int x, int y) override;
+    //void drawCubes(); dessinne les cubes sans les faces mitoyennes
+    //bool contain(int x, int y); verifie si la grille contient un cube a cet emplacement
+
+//slots :
+//    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
     void keyPressEvent(QKeyEvent* event) override;
     void drawCubes() const; //dessinne les cubes sans les faces mitoyennes
@@ -28,7 +33,6 @@ protected:
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
-    double angle;
     Tetris::Grid grid;
     Tetris::Tetromino* t = new Tetris::T_Tetromino;
     //grille de visu (origin des cubes), update via slots lors d'un signal du crtl, utile pour dessiner que face visible
