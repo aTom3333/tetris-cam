@@ -17,6 +17,12 @@ public:
     constexpr fixed_point& operator-=(fixed_point);
     constexpr fixed_point& operator*=(fixed_point);
     constexpr fixed_point& operator/=(fixed_point);
+
+    friend constexpr bool operator==(fixed_point, fixed_point);
+    friend constexpr bool operator<(fixed_point, fixed_point);
+    friend constexpr bool operator>(fixed_point, fixed_point);
+    friend constexpr bool operator<=(fixed_point, fixed_point);
+    friend constexpr bool operator>=(fixed_point, fixed_point);
     
 private:
     T underlying;
@@ -86,37 +92,37 @@ constexpr fixed_point<T, decimals> operator/(fixed_point<T, decimals> a, fixed_p
 }
 
 template<typename T, uint8_t decimals>
-constexpr fixed_point<T, decimals>& operator==(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
+constexpr bool operator==(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
 {
     return a.underlying == b.underlying;
 }
 
 template<typename T, uint8_t decimals>
-constexpr fixed_point<T, decimals>& operator!=(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
+constexpr bool operator!=(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
 {
     return a.underlying != b.underlying;
 }
 
 template<typename T, uint8_t decimals>
-constexpr fixed_point<T, decimals>& operator<(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
+constexpr bool operator<(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
 {
     return a.underlying < b.underlying;
 }
 
 template<typename T, uint8_t decimals>
-constexpr fixed_point<T, decimals>& operator<=(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
+constexpr bool operator<=(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
 {
     return a.underlying <= b.underlying;
 }
 
 template<typename T, uint8_t decimals>
-constexpr fixed_point<T, decimals>& operator>(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
+constexpr bool operator>(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
 {
     return a.underlying > b.underlying;
 }
 
 template<typename T, uint8_t decimals>
-constexpr fixed_point<T, decimals>& operator>=(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
+constexpr bool operator>=(fixed_point<T, decimals> a, fixed_point<T, decimals> b)
 {
     return a.underlying >= b.underlying;
 }
