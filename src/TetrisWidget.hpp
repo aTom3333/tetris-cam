@@ -27,7 +27,8 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void drawCubes() const; //dessinne les cubes sans les faces mitoyennes
     void setColor(const unsigned int& id) const;
-    void drawTetromino()const;
+    void drawTetromino(const unsigned int& offsetY = 0)const;
+    void drawScore() const;
 
 //slots :
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl

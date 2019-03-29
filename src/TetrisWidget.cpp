@@ -249,53 +249,100 @@ void TetrisWidget::setColor(const unsigned int& id) const
     glMaterialfv(GL_FRONT, GL_DIFFUSE, colorDiffuse_tab);
 }
 
-void TetrisWidget::drawTetromino() const
+void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
 {
     Tetris::Coord origin = t->getOrigin();
     std::array<Tetris::Coord, 4> blocks = t->getBlocks();
+    bool drawing = true;
 
     for(size_t i=0; i<blocks.size();i++){
         //face avant
         glNormal3f(0, 0, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5, 1);
+        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 1);
+        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 1);
+        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 1);
+        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 1);
 
         //face arriere
         glNormal3f(0, 0, -1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5, 0);
+        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 0);
+        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 0);
+        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
+        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
 
         //face coter gauche
-        glNormal3f(-1, 0, 0);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5, 0);
+        for(size_t j=0; i<blocks.size();j++){
+            //si il existe un block plus a gauche mais au meme niveau vertical
+            if((blocks[j].x+origin.x < blocks[i].x+origin.x) && (blocks[j].y+origin.y == blocks[i].y+origin.y)){
+                drawing = false;
+                break;
+            }
+        }
+        if(drawing){
+            glNormal3f(-1, 0, 0);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 0);
+        }
+        drawing=true;
 
         //face coter droite
-        glNormal3f(1, 0, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5, 0);
+        for(size_t j=0; i<blocks.size();j++){
+            //si il existe un block plus a droite mais au meme niveau vertical
+            if((blocks[j].x+origin.x > blocks[i].x+origin.x) && (blocks[j].y+origin.y == blocks[i].y+origin.y)){
+                drawing = false;
+                break;
+            }
+        }
+        if(drawing){
+            glNormal3f(1, 0, 0);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 0);
+        }
+        drawing=true;
 
         //face dessus
-        glNormal3f(0, 1, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5, 0);
+        for(size_t j=0; i<blocks.size();j++){
+            //si il existe un block plus en haut mais au meme niveau horizontal
+            if((blocks[j].x+origin.x == blocks[i].x+origin.x) && (blocks[j].y+origin.y > blocks[i].y+origin.y)){
+                drawing = false;
+                break;
+            }
+        }
+        if(drawing){
+            glNormal3f(0, 1, 0);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
+        }
+        drawing=true;
 
         //face dessous
-        glNormal3f(0, -1, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5, 1);
-        glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5, 0);
-        glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5, 0);
+        for(size_t j=0; i<blocks.size();j++){
+            //si il existe un block plus en dessous mais au meme niveau horizontal
+            if((blocks[j].x+origin.x == blocks[i].x+origin.x) && (blocks[j].y+origin.y < blocks[i].y+origin.y)){
+                drawing = false;
+                break;
+            }
+        }
+        if(drawing){
+            glNormal3f(0, -1, 0);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 1);
+            glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 0);
+            glVertex3f(blocks[i].x+origin.x+radius-4.5, blocks[i].y+origin.y-radius-9.5+offsetY, 0);
+        }
+        drawing=true;
     }
+}
+
+void TetrisWidget::drawScore() const
+{
+    //appelle au crlt pour avoir score
+    //renderText(30,30,scoreStr);
 }
 
