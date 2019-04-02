@@ -51,6 +51,9 @@ namespace Tetris
         bool translateRight(Grid const& grid) noexcept;
         bool translateDown(Grid const& grid) noexcept;
         
+        uint32_t getId() const noexcept { return id; }
+        void setId(uint32_t i) noexcept { id = i; }
+        
 
     protected:
         // Vive le C++ \o/ Cette écriture dégueu déclare wall_kick_offset comme 
@@ -69,7 +72,10 @@ namespace Tetris
     protected:
         Coord origin = {5, 5};
         std::array<Coord, 4> blocks;
+    
+    private:
         uint8_t rotationState = 0;
+        uint32_t id;
     };
 
 
@@ -142,7 +148,7 @@ namespace Tetris
         Coord (*wall_kick_offsets() const noexcept)[4][4];
     };
     
-    std::unique_ptr<Tetromino>
+    std::unique_ptr<Tetromino> newTetromino(Tetromino::Kind kind, Grid const& grid);
 
 }
 

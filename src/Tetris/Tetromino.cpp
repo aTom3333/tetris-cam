@@ -241,4 +241,28 @@ namespace Tetris
     Coord (*I_Tetromino::wall_kick_offsets() const noexcept)[4][4] {
         return I_wk_off;
     }
+
+
+    std::unique_ptr<Tetromino> newTetromino(Tetromino::Kind kind, Grid const& grid)
+    {
+        switch(kind)
+        {
+            case Tetromino::I:
+                return std::make_unique<I_Tetromino>(grid);
+            case Tetromino::O:
+                return std::make_unique<O_Tetromino>(grid);
+            case Tetromino::J:
+                return std::make_unique<J_Tetromino>(grid);
+            case Tetromino::L:
+                return std::make_unique<L_Tetromino>(grid);
+            case Tetromino::S:
+                return std::make_unique<S_Tetromino>(grid);
+            case Tetromino::Z:
+                return std::make_unique<Z_Tetromino>(grid);
+            case Tetromino::T:
+                return std::make_unique<T_Tetromino>(grid);
+            default:
+                throw std::logic_error("Invalid value of Tetromino::Kind");
+        }
+    }
 }

@@ -18,7 +18,6 @@ namespace Tetris
         uint32_t width() const noexcept;
         uint32_t height() const noexcept;
 
-    private:
         uint32_t* ptr_to(uint32_t x, uint32_t y) noexcept;
         uint32_t const* ptr_to(uint32_t x, uint32_t y) const noexcept;
 
