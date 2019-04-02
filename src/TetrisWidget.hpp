@@ -6,39 +6,48 @@
 #include "Tetromino.hpp"
 #include "Grid.hpp"
 
-
+//Class gerant l'aspet visuel du jeux
+//dessinne la grille avec les blocks, le tetrominos courrant
+//dessine le score
+//Auteur : Axel POULAT
 class TetrisWidget : public QOpenGLWidget
 {
     Q_OBJECT
     
 public:
+//constructeur
     explicit TetrisWidget(QWidget* parent = nullptr);
     
 protected:
+//Methode redéfinie d'openGl
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int x, int y) override;
-    //void drawCubes(); dessinne les cubes sans les faces mitoyennes
-    //bool contain(int x, int y); verifie si la grille contient un cube a cet emplacement
+	void keyPressEvent(QKeyEvent* event) override;
 
 //slots :
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
-    void keyPressEvent(QKeyEvent* event) override;
-    void drawCubes() const; //dessinne les cubes sans les faces mitoyennes
+//Dessine les cube de la grille logique sans leur faces mitoyennes
+    void drawCubes() const; 
+//applique la couleur automatiquement suivant l'Id des blocks
     void setColor(const unsigned int& id) const;
+//dessine le tetrominos courrant
     void drawTetromino(const unsigned int& offsetY = 0)const;
+//dessine le score
     void drawScore() const;
 
 //slots :
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
+//La grille logique
     Tetris::Grid grid;
+//Le trtrominos courrant
     Tetris::Tetromino* t = new Tetris::T_Tetromino;
-    //grille de visu (origin des cubes), update via slots lors d'un signal du crtl, utile pour dessiner que face visible
-    //tetriminos courrant demander a chaque paint
+//le rayons des cubes a dessiner
     float radius =0.5;
+//des parametre permettant la rotation 3axes du dessin
     float dist =  20;
     float teta = 150;
     float phi = 100;

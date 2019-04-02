@@ -4,20 +4,29 @@
 
 #include <cstdint>
 
+
+//class représentant un reel a virgule fixe 
+//avec toutes les methodes de comparaison et de combinaison
+//Role : represente l'origine des tetrominos et les coordonées des blocks par rapport à l'origine
+//Exemple : le carré a pour origine une intersection de blocks donc un nombre non-entier
+//Auteur : Thomas FERRAND
 template<typename T, uint8_t decimals>
 class fixed_point
 {
 public:
+	//constructeur
     constexpr fixed_point() noexcept = default;
     constexpr fixed_point(double a) noexcept;
     
     constexpr operator double() const noexcept;
     
+	//Methode de combinaison
     constexpr fixed_point& operator+=(fixed_point);
     constexpr fixed_point& operator-=(fixed_point);
     constexpr fixed_point& operator*=(fixed_point);
     constexpr fixed_point& operator/=(fixed_point);
 
+	//Methode de comparaison
     friend constexpr bool operator==(fixed_point, fixed_point);
     friend constexpr bool operator<(fixed_point, fixed_point);
     friend constexpr bool operator>(fixed_point, fixed_point);

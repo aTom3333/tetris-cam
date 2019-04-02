@@ -10,7 +10,6 @@
 #include <opencv2/core.hpp>
 #include "opencv2/video.hpp"
 
-
 class VideoWidget : public QGraphicsView
 {
 public:
