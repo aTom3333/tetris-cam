@@ -10,6 +10,8 @@ namespace Ui
     class MainWindow;
 }
 
+//class représentant la structure de l'application
+//on n'y retrouve TetrisWidget et VideoWidget
 class MainWindow : public QMainWindow
 {
     Q_OBJECT;

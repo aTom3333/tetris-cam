@@ -6,6 +6,8 @@
 #include "fixed_point.hpp"
 
 //class représentant le tetrominos courrant (en chute)
+//Avec les méthodes de rotation, translation 
+//et de vérification des collisions
 //Auteur : Thomas FERRAND
 namespace Tetris
 {
