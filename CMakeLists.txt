@@ -13,7 +13,7 @@ find_package(OpenGL REQUIRED)
 find_package(GLU REQUIRED)
 
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/${CMAKE_BUILD_TYPE})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin)
 
 file(GLOB_RECURSE SOURCE_FILES src/*)
 add_executable(prog ${SOURCE_FILES} src/MainWindow.cpp src/main.cpp src/TetrisWidget.cpp src/TetrisWidget.hpp src/VideoWidget.cpp src/VideoWidget.hpp)
