@@ -2,3 +2,6 @@
 bin
 cmake-build-debug
 cmake-build-release
+build-src-Desktop_Qt_5_12_1_MinGW_64_bit-Debug
+src/src.pro
+src/src.pro.user
