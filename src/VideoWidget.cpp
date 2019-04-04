@@ -45,7 +45,7 @@ VideoWidget::VideoWidget(QWidget* parent) :
     
     if(capture->isOpened())
     {
-        timer.setInterval(1000 /30);
+        timer.setInterval(1000 / 60);
         timer.start();
     }
 }

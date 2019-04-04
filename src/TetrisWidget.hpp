@@ -6,26 +6,51 @@
 #include "Tetris/Tetromino.hpp"
 #include "Tetris/Grid.hpp"
 
-
+//Class gerant l'aspet visuel du jeux
+//dessinne la grille avec les blocks, le tetrominos courrant
+//dessine le score
+//Auteur : Axel POULAT
 class TetrisWidget : public QOpenGLWidget
 {
     Q_OBJECT
     
 public:
+//constructeur
     explicit TetrisWidget(QWidget* parent = nullptr);
     
 protected:
+//Methode redéfinie d'openGl
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int x, int y) override;
-    void keyPressEvent(QKeyEvent* event) override;
+	void keyPressEvent(QKeyEvent* event) override;
+
+//slots :
+//    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
+
+//Dessine les cube de la grille logique sans leur faces mitoyennes
+    void drawCubes() const; 
+//applique la couleur automatiquement suivant l'Id des blocks
+    void setColor(const unsigned int& id) const;
+//dessine le tetrominos courrant
+    void drawTetromino(const unsigned int& offsetY = 0)const;
+//dessine le score
+    void drawScore() const;
+
+//slots :
+//    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
-    double angle;
-    QTimer timer;
+//La grille logique
     Tetris::Grid grid;
-    Tetris::Tetromino* t = nullptr;
-    int temp = 0;
+//Le trtrominos courrant
+    Tetris::Tetromino* t = new Tetris::T_Tetromino;
+//le rayons des cubes a dessiner
+    float radius =0.5;
+//des parametre permettant la rotation 3axes du dessin
+    float dist =  20;
+    float teta = 150;
+    float phi = 100;
 };
 
 
