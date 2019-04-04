@@ -1,0 +1,25 @@
+#include "Bag.hpp"
+#include <algorithm>
+#include <numeric>
+
+
+Tetris::Bag::Bag(std::seed_seq seed) :
+    engine{seed}
+{}
+
+Tetris::Bag::Bag() :
+    engine{std::random_device{}()}
+{}
+
+Tetris::Tetromino::Kind Tetris::Bag::getNext()
+{
+    if(remaining == 0)
+    {
+        std::iota(std::begin(next), std::end(next), 0);
+        std::shuffle(std::begin(next), std::end(next), engine);
+        remaining = 7;
+    }
+    
+    remaining--;
+    return next[remaining];
+}
