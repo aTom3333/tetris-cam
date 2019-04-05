@@ -3,8 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QTimer>
-#include "Tetris/Tetromino.hpp"
-#include "Tetris/Grid.hpp"
+#include "Tetris/Tetris.hpp"
 
 //Class gerant l'aspet visuel du jeux
 //dessinne la grille avec les blocks, le tetrominos courrant
@@ -41,10 +40,11 @@ protected:
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
+    // Timer du jeu
+    QTimer timer;
+    
 //La grille logique
-    Tetris::Grid grid;
-//Le trtrominos courrant
-    Tetris::Tetromino* t = new Tetris::T_Tetromino;
+    Tetris::Tetris game;
 //le rayons des cubes a dessiner
     float radius =0.5;
 //des parametre permettant la rotation 3axes du dessin

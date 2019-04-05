@@ -5,6 +5,10 @@
 
 namespace Tetris
 {
+    Coord operator+(Coord a, Coord b) noexcept
+    {
+        return Coord{a.x+b.x, a.y+b.y};
+    }
     
     Tetromino::Tetromino(Grid const& grid) :
         origin{}, blocks{}

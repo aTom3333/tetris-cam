@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "Tetris/Tetromino.hpp"
-#include "fixed_point.hpp"
+#include "Tetris/fixed_point.hpp"
 
 int main(int argc, char** argv)
 {

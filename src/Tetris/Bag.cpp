@@ -15,7 +15,9 @@ Tetris::Tetromino::Kind Tetris::Bag::getNext()
 {
     if(remaining == 0)
     {
-        std::iota(std::begin(next), std::end(next), 0);
+        int init = 0;
+        for(auto& k : next)
+            k = static_cast<Tetromino::Kind>(init++);
         std::shuffle(std::begin(next), std::end(next), engine);
         remaining = 7;
     }

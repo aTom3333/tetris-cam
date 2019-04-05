@@ -21,12 +21,15 @@ namespace Tetris
         bool goLeft();
         bool goRight();
         bool goDown();
+        bool rotateLeft();
+        bool rotateRight();
         
         void fallDown();
         
         //acesseur
         Grid const& getGrid() const noexcept { return grid; }
         uint32_t getScore() const noexcept { return score; }
+        Tetromino const* getTetromino() const noexcept { return current.get(); }
         
         //verifie la fin de partie
         bool testDefeat() const;

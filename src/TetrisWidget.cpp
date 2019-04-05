@@ -6,27 +6,22 @@
 
 
 TetrisWidget::TetrisWidget(QWidget* parent) :
-    QOpenGLWidget{parent}, grid{10, 20}
+    QOpenGLWidget{parent}
 {
     setFocusPolicy(Qt::StrongFocus);
-
-    grid(0, 0) = 1;
-    grid(9, 0) = 2;
-    grid(0, 19) = 3;
-    grid(9, 19) = 4;
-    
-    grid(2,6) = 5;
-    grid(2,5) = 6;
-    grid(2,4) = 6;
-    grid(1,5) = 6;
-    grid(3,5) = 6;
-
-    grid(3, 14) = 7;
 
     QSurfaceFormat f = format();
     f.setSamples(8);
     setFormat(f);
     glEnable(GL_MULTISAMPLE);
+    
+    connect(&timer, &QTimer::timeout, [this]() {
+        game.goDown();
+        update();
+    });
+    
+    timer.setInterval(200);
+    timer.start();
 }
 
 void TetrisWidget::paintGL()
@@ -73,7 +68,8 @@ void TetrisWidget::paintGL()
 
     //dessin des cube de la grille
     drawCubes();
-
+    drawTetromino();
+    drawScore();
 }
 
 void TetrisWidget::initializeGL()
@@ -109,12 +105,12 @@ void TetrisWidget::keyPressEvent(QKeyEvent* event)
     switch(event->key())
     {
         case Qt::Key_A:
-            t->rotateCCW(grid);
+            game.rotateLeft();
             update();
             break;
 
         case Qt::Key_P:
-            t->rotateCW(grid);
+            game.rotateRight();
             update();
             break;
             
@@ -130,27 +126,24 @@ void TetrisWidget::keyPressEvent(QKeyEvent* event)
             if(teta>1){
                 teta--;
                 }
-        case Qt::Key_Up:
-            t->trans(grid, 0, 1);
-            update();
-            break;
 
         case Qt::Key_S:
             if(teta<179){
               teta++;
               }
+              
         case Qt::Key_Down:
-            t->translateDown(grid);
+            game.goDown();
             update();
             break;
 
         case Qt::Key_Left:
-            t->translateLeft(grid);
+            game.goLeft();
             update();
             break;
 
         case Qt::Key_Right:
-            t->translateRight(grid);
+            game.goRight();
             update();
             break;
     }
@@ -159,6 +152,8 @@ void TetrisWidget::keyPressEvent(QKeyEvent* event)
 
 void TetrisWidget::drawCubes() const
 {
+    auto const& grid = game.getGrid();
+    
     for(unsigned int i = 0; i < 10; i++){
         for(unsigned int j = 0; j < 20; j++){
             if(grid(i,j) != 0){
@@ -277,10 +272,15 @@ void TetrisWidget::setColor(const unsigned int& id) const
 
 void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
 {
-    Tetris::Coord origin = t->getOrigin();
-    std::array<Tetris::Coord, 4> blocks = t->getBlocks();
+    if(!game.getTetromino())
+        return;
+    
+    setColor(game.getTetromino()->getId() & 7);
+    Tetris::Coord origin = game.getTetromino()->getOrigin();
+    std::array<Tetris::Coord, 4> blocks = game.getTetromino()->getBlocks();
     bool drawing = true;
 
+    glBegin(GL_QUADS);
     for(size_t i=0; i<blocks.size();i++){
         //face avant
         glNormal3f(0, 0, 1);
@@ -297,7 +297,7 @@ void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
         glVertex3f(blocks[i].x+origin.x-radius-4.5, blocks[i].y+origin.y+radius-9.5+offsetY, 0);
 
         //face coter gauche
-        for(size_t j=0; i<blocks.size();j++){
+        for(size_t j=0; j<blocks.size();j++){
             //si il existe un block plus a gauche mais au meme niveau vertical
             if((blocks[j].x+origin.x < blocks[i].x+origin.x) && (blocks[j].y+origin.y == blocks[i].y+origin.y)){
                 drawing = false;
@@ -314,7 +314,7 @@ void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
         drawing=true;
 
         //face coter droite
-        for(size_t j=0; i<blocks.size();j++){
+        for(size_t j=0; j<blocks.size();j++){
             //si il existe un block plus a droite mais au meme niveau vertical
             if((blocks[j].x+origin.x > blocks[i].x+origin.x) && (blocks[j].y+origin.y == blocks[i].y+origin.y)){
                 drawing = false;
@@ -331,7 +331,7 @@ void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
         drawing=true;
 
         //face dessus
-        for(size_t j=0; i<blocks.size();j++){
+        for(size_t j=0; j<blocks.size();j++){
             //si il existe un block plus en haut mais au meme niveau horizontal
             if((blocks[j].x+origin.x == blocks[i].x+origin.x) && (blocks[j].y+origin.y > blocks[i].y+origin.y)){
                 drawing = false;
@@ -348,7 +348,7 @@ void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
         drawing=true;
 
         //face dessous
-        for(size_t j=0; i<blocks.size();j++){
+        for(size_t j=0; j<blocks.size();j++){
             //si il existe un block plus en dessous mais au meme niveau horizontal
             if((blocks[j].x+origin.x == blocks[i].x+origin.x) && (blocks[j].y+origin.y < blocks[i].y+origin.y)){
                 drawing = false;
@@ -364,6 +364,7 @@ void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
         }
         drawing=true;
     }
+    glEnd();
 }
 
 void TetrisWidget::drawScore() const

@@ -49,7 +49,7 @@ void Tetris::Tetris::spawnNew()
 {
     Tetromino::Kind kind = bag.getNext();
     current = std::move(makeTetromino(kind, grid));
-    current->setId(currentId << 3 & static_cast<uint8_t>(kind));
+    current->setId((currentId << 3) | static_cast<uint8_t>(kind));
     ++currentId;
 }
 
@@ -68,6 +68,16 @@ void Tetris::Tetris::clearCompletedLines()
 bool Tetris::Tetris::testDefeat() const
 {
     return std::any_of(grid.ptr_to(0, grid.height()-2), grid.ptr_to(0, grid.height()), [](uint32_t val){ return val != 0; });
+}
+
+bool Tetris::Tetris::rotateLeft()
+{
+    return current->rotateCCW(grid);
+}
+
+bool Tetris::Tetris::rotateRight()
+{
+    return current->rotateCW(grid);
 }
 
 std::unique_ptr<Tetris::Tetromino> Tetris::makeTetromino(Tetromino::Kind kind, Grid const& grid)

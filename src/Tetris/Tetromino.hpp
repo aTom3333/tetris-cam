@@ -17,10 +17,7 @@ namespace Tetris
         fixed_point<int8_t, 1> x, y;
     };
     
-    Coord operator+(Coord a, Coord b) noexcept
-    {
-        return Coord{a.x+b.x, a.y+b.y};
-    }
+    Coord operator+(Coord a, Coord b) noexcept;
     
     
     enum class Rotation : uint8_t
@@ -70,12 +67,12 @@ namespace Tetris
         bool translate(Grid const& grid, Coord v) noexcept;
 
     protected:
-        Coord origin = {5, 5};
+        Coord origin = {fixed_point<int8_t,1>(5), fixed_point<int8_t,1>(5)};
         std::array<Coord, 4> blocks;
     
     private:
         uint8_t rotationState = 0;
-        uint32_t id;
+        uint32_t id = 0;
     };
 
 
