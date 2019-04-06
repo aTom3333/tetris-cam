@@ -36,7 +36,8 @@ protected:
 //dessine le score
     void drawScore() const;
 
-//slots :
+private slots:
+    void newGame();
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:

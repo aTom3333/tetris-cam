@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
-    <height>528</height>
+    <width>453</width>
+    <height>323</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Horizontal</enum>
       </property>
       <widget class="TetrisWidget" name="QOpenGLWidget">
        <property name="sizePolicy">
@@ -27,13 +27,25 @@
          <verstretch>1</verstretch>
         </sizepolicy>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
       </widget>
       <widget class="VideoWidget" name="graphicsView">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <horstretch>1</horstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>200</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
       </widget>
      </widget>
@@ -45,12 +57,30 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>451</width>
+     <width>453</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menugame">
+    <property name="title">
+     <string>game</string>
+    </property>
+    <addaction name="actionnew"/>
+    <addaction name="actionclose"/>
+   </widget>
+   <addaction name="menugame"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionnew">
+   <property name="text">
+    <string>new</string>
+   </property>
+  </action>
+  <action name="actionclose">
+   <property name="text">
+    <string>close</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

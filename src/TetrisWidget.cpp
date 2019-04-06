@@ -373,3 +373,10 @@ void TetrisWidget::drawScore() const
     //renderText(30,30,scoreStr);
 }
 
+//SLOTS
+void TetrisWidget::newGame()
+{
+    //call newgame from tetris (erase grid, generate new tetrominos)
+    qDebug()<<"NEW GAME";
+}
+
