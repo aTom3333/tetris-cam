@@ -22,6 +22,8 @@ TetrisWidget::TetrisWidget(QWidget* parent) :
     
     timer.setInterval(200);
     timer.start();
+
+    connect(&timerForSlots, SIGNAL(timeout()), this,SLOT(stopTimer()));
 }
 
 void TetrisWidget::paintGL()
@@ -378,5 +380,37 @@ void TetrisWidget::newGame()
 {
     //call newgame from tetris (erase grid, generate new tetrominos)
     qDebug()<<"NEW GAME";
+}
+
+void TetrisWidget::rotate()
+{
+    if(!timerForSlots.isActive()){
+        game.rotateLeft();
+        qDebug()<<"ROTATE";
+        timerForSlots.start(500);
+    }
+}
+
+void TetrisWidget::goLeft()
+{
+    game.goLeft();
+    qDebug()<<"GO LEFT";
+}
+
+void TetrisWidget::goRight()
+{
+    game.goRight();
+    qDebug()<<"GO RIGHT";
+}
+
+void TetrisWidget::goDown()
+{
+    game.goDown();
+    qDebug()<<"GO DOWN";
+}
+
+void TetrisWidget::stopTimer()
+{
+    timerForSlots.stop();
 }
 

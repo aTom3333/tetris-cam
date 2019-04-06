@@ -38,13 +38,18 @@ protected:
 
 private slots:
     void newGame();
+    void rotate();
+    void goLeft();
+    void goRight();
+    void goDown();
+    void stopTimer();
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
     // Timer du jeu
     QTimer timer;
     
-//La grille logique
+//Le controller du jeu
     Tetris::Tetris game;
 //le rayons des cubes a dessiner
     float radius =0.5;
@@ -52,6 +57,7 @@ private:
     float dist =  20;
     float teta = 150;
     float phi = 100;
+    QTimer timerForSlots;
 };
 
 

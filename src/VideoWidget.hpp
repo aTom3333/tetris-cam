@@ -21,6 +21,8 @@ public:
 //constructeur
     explicit VideoWidget(QWidget* parent = nullptr);
     
+    const Hand* getHand()const{return &fist;}
+
 private:
 //pointeur sur la class gérant la video de la caméra
     std::unique_ptr<cv::VideoCapture> capture;

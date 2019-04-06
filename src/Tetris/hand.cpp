@@ -10,13 +10,13 @@ Hand::Hand(){
 void Hand::leftHandDisapear(){
     qDebug()<<"left is no longer present";
     isLeftHand = false;
-    this->timerOfLeftHandPresence_.stop();
+    timerOfLeftHandPresence_.stop();
 }
 
 void Hand::rightHandDisapear(){
     qDebug()<<"right is no longer present";
     isRightHand = false;
-    this->timerOfRightHandPresence_.stop();
+    timerOfRightHandPresence_.stop();
 }
 
 bool Hand::loadCascade(std::string path){

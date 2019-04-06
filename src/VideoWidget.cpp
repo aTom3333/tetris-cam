@@ -49,3 +49,4 @@ VideoWidget::VideoWidget(QWidget* parent) :
         timer.start();
     }
 }
+
