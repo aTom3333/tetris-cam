@@ -1,4 +1,4 @@
-#include "hand.h"
+#include "Tetris/hand.h"
 #include <QThread>
 #include <QDebug>
 
@@ -10,11 +10,13 @@ Hand::Hand(){
 void Hand::leftHandDisapear(){
     qDebug()<<"left is no longer present";
     isLeftHand = false;
+    this->timerOfLeftHandPresence_.stop();
 }
 
 void Hand::rightHandDisapear(){
     qDebug()<<"right is no longer present";
     isRightHand = false;
+    this->timerOfRightHandPresence_.stop();
 }
 
 bool Hand::loadCascade(std::string path){
@@ -62,7 +64,7 @@ void Hand::identifyHand()
                 isLeftHand = true;
 
                 //si la main droite disparait pour la premiere fois on active le timer d'absence
-                if(!timerOfRightHandPresence_.isActive()){
+                if(!timerOfRightHandPresence_.isActive() && isRightHand){
                     qDebug()<<"right has disapear";
                      timerOfRightHandPresence_.start(500);
                 }
@@ -70,15 +72,14 @@ void Hand::identifyHand()
                 rightHand_ = rightHandTEMP;
                 timerOfRightHandPresence_.stop(); //on l'a trouver donc on stop le timer d'absence
                 isRightHand = true;
-                //si cette main avais deja disparue
-                if(timerOfLeftHandPresence_.isActive()){
-                    //si cette main disparait pour la premiere fois
+                //si cette main disparait pour la premiere fois
+                if(!timerOfLeftHandPresence_.isActive() && isLeftHand){
                     timerOfLeftHandPresence_.start(500);
                     qDebug()<<"left has disapear";
                 }
             }
         }
-        else{ //si les deux main son differente alors tout va bien
+        else{ //si les deux main sont differentes alors tout va bien
             leftHand_ = leftHandTEMP;
             rightHand_ = rightHandTEMP;
             isLeftHand = true;
@@ -87,6 +88,18 @@ void Hand::identifyHand()
             timerOfRightHandPresence_.stop();
         }
    }
+    //si aucune main n'est détecté
+   else{
+        //si le timer n'est pas actif et que la main est presente on lance le timer d'absence
+        if(!timerOfLeftHandPresence_.isActive() && isLeftHand){
+            timerOfLeftHandPresence_.start(500);
+            qDebug()<<"no hand detected but left present, starting timer";
+        }
+        if(!timerOfRightHandPresence_.isActive() && isRightHand){
+            timerOfRightHandPresence_.start(500);
+            qDebug()<<"no hand detected but right present, starting timer";
+        }
+    }
 }
 
 void Hand::drawAllBoundingBox(cv::Mat& frame, const cv::Scalar color, const std::string text) const

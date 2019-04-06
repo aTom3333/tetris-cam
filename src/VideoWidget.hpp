@@ -9,7 +9,7 @@
 #include "opencv2/opencv.hpp"
 #include <opencv2/core.hpp>
 #include "opencv2/video.hpp"
-#include "Tetris/hand.h";
+#include "Tetris/hand.h"
 
 //Class représentant la partie openCv du projet.
 //On n'y retrouve la video de la caméra et
