@@ -23,7 +23,7 @@ TetrisWidget::TetrisWidget(QWidget* parent) :
     timer.setInterval(200);
     timer.start();
 
-    connect(&timerForSlots, SIGNAL(timeout()), this,SLOT(stopTimer()));
+    connect(&timerForRotation, SIGNAL(timeout()), this,SLOT(stopTimerForRotation()));
 }
 
 void TetrisWidget::paintGL()
@@ -384,23 +384,29 @@ void TetrisWidget::newGame()
 
 void TetrisWidget::rotate()
 {
-    if(!timerForSlots.isActive()){
+    if(!timerForRotation.isActive()){
         game.rotateLeft();
         qDebug()<<"ROTATE";
-        timerForSlots.start(500);
+        timerForRotation.start(500);
     }
 }
 
 void TetrisWidget::goLeft()
 {
-    game.goLeft();
-    qDebug()<<"GO LEFT";
+    if(!timerForDirection.isActive()){
+        game.goLeft();
+        qDebug()<<"GO LEFT";
+        timerForDirection.start(250);
+    }
 }
 
 void TetrisWidget::goRight()
 {
-    game.goRight();
-    qDebug()<<"GO RIGHT";
+    if(!timerForDirection.isActive()){
+        game.goRight();
+        qDebug()<<"GO RIGHT";
+        timerForDirection.start(250);
+    }
 }
 
 void TetrisWidget::goDown()
@@ -409,8 +415,13 @@ void TetrisWidget::goDown()
     qDebug()<<"GO DOWN";
 }
 
-void TetrisWidget::stopTimer()
+void TetrisWidget::stopTimerForRotation()
 {
-    timerForSlots.stop();
+    timerForRotation.stop();
+}
+
+void TetrisWidget::stopTimerForDirection()
+{
+    timerForDirection.stop();
 }
 

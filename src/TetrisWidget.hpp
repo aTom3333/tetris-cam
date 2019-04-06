@@ -42,7 +42,9 @@ private slots:
     void goLeft();
     void goRight();
     void goDown();
-    void stopTimer();
+    //slot pour stopper les timers car ils restent actif apres timeout
+    void stopTimerForRotation();
+    void stopTimerForDirection();
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
 private:
@@ -57,7 +59,9 @@ private:
     float dist =  20;
     float teta = 150;
     float phi = 100;
-    QTimer timerForSlots;
+//timers pour eviter que les actions utilisateur soient effectuer 1000 fois par seconde
+    QTimer timerForRotation;
+    QTimer timerForDirection;
 };
 
 
