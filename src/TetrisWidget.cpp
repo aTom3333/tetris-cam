@@ -20,7 +20,11 @@ TetrisWidget::TetrisWidget(QWidget* parent) :
         update();
     });
     
-    timer.setInterval(200);
+    connect(&input_delay, &QTimer::timeout, [this]() {
+        canMove = true;
+    });
+    
+    timer.setInterval(300);
     timer.start();
 }
 
@@ -371,5 +375,45 @@ void TetrisWidget::drawScore() const
 {
     //appelle au crlt pour avoir score
     //renderText(30,30,scoreStr);
+}
+
+void TetrisWidget::rotate()
+{
+    if(canMove)
+    {
+        game.rotateRight();
+        canMove = false;
+        input_delay.start(delay);
+    }
+}
+
+void TetrisWidget::goLeft()
+{
+    if(canMove)
+    {
+        game.goLeft();
+        canMove = false;
+        input_delay.start(delay);
+    }
+}
+
+void TetrisWidget::goRight()
+{
+    if(canMove)
+    {
+        game.goRight();
+        canMove = false;
+        input_delay.start(delay);
+    }
+}
+
+void TetrisWidget::fall()
+{
+    if(canMove)
+    {
+        game.fallDown();
+        canMove = false;
+        input_delay.start(delay);
+    }
 }
 

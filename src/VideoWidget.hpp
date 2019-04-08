@@ -9,7 +9,7 @@
 #include "opencv2/opencv.hpp"
 #include <opencv2/core.hpp>
 #include "opencv2/video.hpp"
-#include "Tetris/hand.h"
+#include "hand.h"
 
 //Class représentant la partie openCv du projet.
 //On n'y retrouve la video de la caméra et
@@ -20,6 +20,8 @@ class VideoWidget : public QGraphicsView
 public:
 //constructeur
     explicit VideoWidget(QWidget* parent = nullptr);
+
+    Hand* getHand() { return &fist; }
     
 private:
 //pointeur sur la class gérant la video de la caméra

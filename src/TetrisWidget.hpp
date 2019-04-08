@@ -24,9 +24,14 @@ protected:
     void resizeGL(int x, int y) override;
 	void keyPressEvent(QKeyEvent* event) override;
 
-//slots :
+public slots :
+    void rotate();
+    void goLeft();
+    void goRight();
+    void fall();
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
+private:
 //Dessine les cube de la grille logique sans leur faces mitoyennes
     void drawCubes() const; 
 //applique la couleur automatiquement suivant l'Id des blocks
@@ -42,6 +47,11 @@ protected:
 private:
     // Timer du jeu
     QTimer timer;
+    
+    QTimer input_delay;
+    bool canMove = true;
+    
+    int delay = 200;
     
 //La grille logique
     Tetris::Tetris game;

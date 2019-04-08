@@ -11,7 +11,7 @@ VideoWidget::VideoWidget(QWidget* parent) :
 {
     setScene(&scene);
 
-    fist.loadCascade("../haarcascade/fist.xml");
+    fist.loadCascade("../haarcascade/fistCascade.xml");
 
     connect(&timer, &QTimer::timeout, [this]{
         if (capture->isOpened()) {
