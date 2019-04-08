@@ -33,8 +33,9 @@ void Tetris::Tetris::fallDown()
 
 void Tetris::Tetris::reset()
 {
-    grid.clear_lines(1,21);
+    grid.clear_lines(0,21);
     bag.reset();
+    spawnNew();
 }
 
 void Tetris::Tetris::turnIntoBlock()
@@ -58,7 +59,7 @@ void Tetris::Tetris::spawnNew()
 {
     Tetromino::Kind kind = bag.getNext();
     current = std::move(makeTetromino(kind, grid));
-    current->setId((currentId << 3) | static_cast<uint8_t>(kind));
+    current->setId((currentId << 3) | static_cast<uint8_t>(kind+1));
     ++currentId;
 }
 

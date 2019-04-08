@@ -15,9 +15,4 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(ui->graphicsView->getHand(), SIGNAL(fastFall()), ui->QOpenGLWidget, SLOT(fall()));
 }
 
-void MainWindow::close()
-{
-    this->close();
-}
-
 

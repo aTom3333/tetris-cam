@@ -43,7 +43,7 @@ void TetrisWidget::paintGL()
     z=dist*sin(teta*M_PI/180)*sin(phi*M_PI/180);
     gluLookAt(x,y,z,0,0,0,0,1,0);
     //gluLookAt(-2, -15, 10, 0, 0, 0, 0, 1, 0);
-    glRotated(10,0,0,1);
+    glRotated(3,0,0,1);
 
 
     // Reglage de la lampe
@@ -142,11 +142,18 @@ void TetrisWidget::keyPressEvent(QKeyEvent* event)
             if(teta>1){
                 teta--;
                 }
+            break;
 
         case Qt::Key_S:
             if(teta<179){
-              teta++;
-              }
+                teta++;
+            }
+            break;
+
+        case Qt::Key_H:
+            qDebug() << "teta:" << teta;
+            qDebug() << "phi:" << phi;
+            break;
               
         case Qt::Key_Down:
             game.goDown();
@@ -241,46 +248,46 @@ void TetrisWidget::setColor(const unsigned int& id) const
 
     unsigned int colorID = id & 7;
     switch (colorID) {
-    case 1://I cyan
-        colorDiffuse_tab[0] = 0;
-        colorDiffuse_tab[1] = 1;
-        colorDiffuse_tab[2] = 1;
-        break;
-    case 2://O jaune
-        colorDiffuse_tab[0] = 1;
-        colorDiffuse_tab[1] = 1;
-        colorDiffuse_tab[2] = 0;
-        break;
-    case 3://T magenta
-        colorDiffuse_tab[0] = 1;
-        colorDiffuse_tab[1] = 0;
-        colorDiffuse_tab[2] = 1;
-        break;
-    case 4://L orange
-        colorDiffuse_tab[0] = 1;
-        colorDiffuse_tab[1] = 0.5;
-        colorDiffuse_tab[2] = 0;
-        break;
-    case 5://J bleu
-        colorDiffuse_tab[0] = 0;
-        colorDiffuse_tab[1] = 0;
-        colorDiffuse_tab[2] = 1;
-        break;
-    case 6://Z rouge
-        colorDiffuse_tab[0] = 1;
-        colorDiffuse_tab[1] = 0;
-        colorDiffuse_tab[2] = 0;
-        break;
-    case 7://S vert
-        colorDiffuse_tab[0] = 0;
-        colorDiffuse_tab[1] = 1;
-        colorDiffuse_tab[2] = 0;
-        break;
-    default: //autre noir
-        colorDiffuse_tab[0] = 0;
-        colorDiffuse_tab[1] = 0;
-        colorDiffuse_tab[2] = 0;
-        break;
+        case 1://I cyan
+            colorDiffuse_tab[0] = 0.188;
+            colorDiffuse_tab[1] = 0.78;
+            colorDiffuse_tab[2] = 0.937;
+            break;
+        case 2://O jaune
+            colorDiffuse_tab[0] = 0.969;
+            colorDiffuse_tab[1] = 0.831;
+            colorDiffuse_tab[2] = 0.027;
+            break;
+        case 3://J bleu
+            colorDiffuse_tab[0] = 0;
+            colorDiffuse_tab[1] = 0;
+            colorDiffuse_tab[2] = 1;
+            break;
+        case 4://L orange
+            colorDiffuse_tab[0] = 0.937;
+            colorDiffuse_tab[1] = 0.475;
+            colorDiffuse_tab[2] = 0.133;
+            break;
+        case 5://S vert
+            colorDiffuse_tab[0] = 0;
+            colorDiffuse_tab[1] = 1;
+            colorDiffuse_tab[2] = 0.04;
+            break;
+        case 6://Z rouge
+            colorDiffuse_tab[0] = 1;
+            colorDiffuse_tab[1] = 0.04;
+            colorDiffuse_tab[2] = 0;
+            break;
+        case 7://T magenta
+            colorDiffuse_tab[0] = 0.678;
+            colorDiffuse_tab[1] = 0.306;
+            colorDiffuse_tab[2] = 0.62;
+            break;
+        default: //autre noir
+            colorDiffuse_tab[0] = 0;
+            colorDiffuse_tab[1] = 0;
+            colorDiffuse_tab[2] = 0;
+            break;
     }
     glMaterialfv(GL_FRONT, GL_AMBIENT, colorDiffuse_tab);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, colorDiffuse_tab);

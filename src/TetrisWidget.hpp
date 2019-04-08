@@ -59,8 +59,8 @@ private:
     float radius =0.5;
 //des parametre permettant la rotation 3axes du dessin
     float dist =  20;
-    float teta = 150;
-    float phi = 100;
+    float teta = 111;
+    float phi = 96;
 };
 
 

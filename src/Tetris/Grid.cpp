@@ -48,6 +48,7 @@ namespace Tetris
     void Grid::clear_lines(uint32_t from, uint32_t to) noexcept
     {
         std::copy(ptr_to(0, to), data_ptr.get() + w * h, ptr_to(0, from));
+        std::fill(ptr_to(0, height()-(to-from)), ptr_to(0, height()), 0);
     }
 
 }
