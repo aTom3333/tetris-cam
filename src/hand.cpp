@@ -1,4 +1,4 @@
-#include "Tetris/hand.h"
+#include "hand.h"
 #include <QThread>
 #include <QDebug>
 
