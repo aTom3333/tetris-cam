@@ -20,7 +20,11 @@ TetrisWidget::TetrisWidget(QWidget* parent) :
         update();
     });
     
-    timer.setInterval(200);
+    connect(&input_delay, &QTimer::timeout, [this]() {
+        canMove = true;
+    });
+    
+    timer.setInterval(300);
     timer.start();
 
     connect(&timerForRotation, SIGNAL(timeout()), this,SLOT(stopTimerForRotation()));
@@ -384,44 +388,41 @@ void TetrisWidget::newGame()
 
 void TetrisWidget::rotate()
 {
-    if(!timerForRotation.isActive()){
-        game.rotateLeft();
-        qDebug()<<"ROTATE";
-        timerForRotation.start(500);
+    if(canMove)
+    {
+        game.rotateRight();
+        canMove = false;
+        input_delay.start(delay);
     }
 }
 
 void TetrisWidget::goLeft()
 {
-    if(!timerForDirection.isActive()){
+    if(canMove)
+    {
         game.goLeft();
-        qDebug()<<"GO LEFT";
-        timerForDirection.start(250);
+        canMove = false;
+        input_delay.start(delay);
     }
 }
 
 void TetrisWidget::goRight()
 {
-    if(!timerForDirection.isActive()){
+    if(canMove)
+    {
         game.goRight();
-        qDebug()<<"GO RIGHT";
-        timerForDirection.start(250);
+        canMove = false;
+        input_delay.start(delay);
     }
 }
 
-void TetrisWidget::goDown()
+void TetrisWidget::fall()
 {
-    game.goDown();
-    qDebug()<<"GO DOWN";
-}
-
-void TetrisWidget::stopTimerForRotation()
-{
-    timerForRotation.stop();
-}
-
-void TetrisWidget::stopTimerForDirection()
-{
-    timerForDirection.stop();
+    if(canMove)
+    {
+        game.fallDown();
+        canMove = false;
+        input_delay.start(delay);
+    }
 }
 

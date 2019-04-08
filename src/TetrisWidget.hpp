@@ -24,9 +24,15 @@ protected:
     void resizeGL(int x, int y) override;
 	void keyPressEvent(QKeyEvent* event) override;
 
-//slots :
+public slots :
+	void newGame();
+    void rotate();
+    void goLeft();
+    void goRight();
+    void fall();
 //    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
 
+private:
 //Dessine les cube de la grille logique sans leur faces mitoyennes
     void drawCubes() const; 
 //applique la couleur automatiquement suivant l'Id des blocks
@@ -35,23 +41,19 @@ protected:
     void drawTetromino(const unsigned int& offsetY = 0)const;
 //dessine le score
     void drawScore() const;
-
-private slots:
-    void newGame();
-    void rotate();
-    void goLeft();
-    void goRight();
-    void goDown();
-    //slot pour stopper les timers car ils restent actif apres timeout
-    void stopTimerForRotation();
-    void stopTimerForDirection();
-//    updateGrille : demande grille uniquement si modif, fct avec tt type de grille coter crtl
+    
 
 private:
     // Timer du jeu
     QTimer timer;
-    
+	
 //Le controller du jeu
+    QTimer input_delay;
+    bool canMove = true;
+    
+    int delay = 200;
+    
+//La grille logique
     Tetris::Tetris game;
 //le rayons des cubes a dessiner
     float radius =0.5;
@@ -59,9 +61,6 @@ private:
     float dist =  20;
     float teta = 150;
     float phi = 100;
-//timers pour eviter que les actions utilisateur soient effectuer 1000 fois par seconde
-    QTimer timerForRotation;
-    QTimer timerForDirection;
 };
 
 
