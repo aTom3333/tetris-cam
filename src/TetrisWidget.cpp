@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <cmath>
+#include <QPainter>
 
 
 TetrisWidget::TetrisWidget(QWidget* parent) :
@@ -27,7 +28,6 @@ TetrisWidget::TetrisWidget(QWidget* parent) :
     timer.setInterval(300);
     timer.start();
 
-    connect(&timerForRotation, SIGNAL(timeout()), this,SLOT(stopTimerForRotation()));
 }
 
 void TetrisWidget::paintGL()
@@ -74,8 +74,18 @@ void TetrisWidget::paintGL()
 
     //dessin des cube de la grille
     drawCubes();
+    //dessin du tetrominos en chute
     drawTetromino();
-    drawScore();
+    drawScore(this);
+
+//    //appelle au crlt pour avoir score
+//    QString scoreStr = QString::number(game.getScore());
+//    QPainter painter;
+//    painter.begin(this);
+//    painter.setFont(QFont("Arial", 30));
+//    painter.setPen(QColor::fromRgb(255,255,255));
+//    painter.drawText(30,30,scoreStr);
+//    painter.end();
 }
 
 void TetrisWidget::initializeGL()
@@ -373,17 +383,27 @@ void TetrisWidget::drawTetromino(const unsigned int& offsetY) const
     glEnd();
 }
 
-void TetrisWidget::drawScore() const
+void TetrisWidget::drawScore(QPaintDevice* device) const
 {
     //appelle au crlt pour avoir score
-    //renderText(30,30,scoreStr);
+    QString scoreStr = QString::number(game.getScore());
+
+    //enleve le z buffer pour dessiner du text en 2D
+    glDisable(GL_DEPTH_TEST);
+    QPainter painter;
+    painter.begin(device);
+    painter.setFont(QFont("Arial", 30));
+    painter.setPen(QColor::fromRgb(255,255,255));
+    painter.drawText(30,60,scoreStr);
+    painter.end();
+    glEnable(GL_DEPTH_TEST);
 }
 
 //SLOTS
 void TetrisWidget::newGame()
 {
     //call newgame from tetris (erase grid, generate new tetrominos)
-    qDebug()<<"NEW GAME";
+    game.reset();
 }
 
 void TetrisWidget::rotate()

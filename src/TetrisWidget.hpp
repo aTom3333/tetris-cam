@@ -40,7 +40,7 @@ private:
 //dessine le tetrominos courrant
     void drawTetromino(const unsigned int& offsetY = 0)const;
 //dessine le score
-    void drawScore() const;
+    void drawScore(QPaintDevice* device) const;
     
 
 private:

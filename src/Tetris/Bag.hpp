@@ -20,6 +20,8 @@ namespace Tetris
         //genere le prochain tetrominos courant
         Tetromino::Kind getNext();
 
+        void reset();
+
     private:
         //le moteur aleatoire pour la generation
         std::mt19937 engine;

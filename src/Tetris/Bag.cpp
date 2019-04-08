@@ -25,3 +25,12 @@ Tetris::Tetromino::Kind Tetris::Bag::getNext()
     remaining--;
     return next[remaining];
 }
+
+void Tetris::Bag::reset()
+{
+    int init = 0;
+    for(auto& k : next)
+        k = static_cast<Tetromino::Kind>(init++);
+    std::shuffle(std::begin(next), std::end(next), engine);
+    remaining = 7;
+}

@@ -25,6 +25,9 @@ namespace Tetris
         bool rotateRight();
         
         void fallDown();
+
+        //reinitialise la partie
+        void reset();
         
         //acesseur
         Grid const& getGrid() const noexcept { return grid; }

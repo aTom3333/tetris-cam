@@ -31,6 +31,12 @@ void Tetris::Tetris::fallDown()
     while(goDown());
 }
 
+void Tetris::Tetris::reset()
+{
+    grid.clear_lines(1,21);
+    bag.reset();
+}
+
 void Tetris::Tetris::turnIntoBlock()
 {
     Coord o = current->getOrigin();
@@ -42,6 +48,9 @@ void Tetris::Tetris::turnIntoBlock()
     
     clearCompletedLines();
     
+    if(testDefeat()){
+        reset();
+    }
     spawnNew();
 }
 
@@ -61,6 +70,7 @@ void Tetris::Tetris::clearCompletedLines()
         {
             grid.clear_line(i);
             --i;
+            score++;
         }
     }
 }
