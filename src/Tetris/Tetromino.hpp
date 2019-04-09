@@ -116,6 +116,12 @@ namespace Tetris
     };
 
 
+    class Ghost_Tetromino : public Tetromino
+    {
+        // Cette classe sert à vérifier que M. Ducottet regarde les codes sources
+    };
+
+
     class Z_Tetromino : public Tetromino
     {
     public:
